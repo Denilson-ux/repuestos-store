@@ -1,7 +1,17 @@
+'use client'
+
 import Link from 'next/link'
-import { ShoppingCart, User, Search, Menu } from 'lucide-react'
+import { ShoppingCart, User, Search, Menu, LogOut } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
+import { useCart } from '../contexts/CartContext'
 
 export default function Header() {
+  const { user, logout } = useAuth()
+  const { totalItems } = useCart()
+
+  const handleLogout = () => {
+    logout()
+  }
   return (
     <header className="bg-white shadow-lg">
       <div className="container mx-auto px-4">
@@ -43,18 +53,50 @@ export default function Header() {
           {/* Actions */}
           <div className="flex items-center space-x-4">
             {/* User menu */}
-            <Link href="/auth/login" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
-              <User size={20} />
-              <span className="hidden md:inline">Mi Cuenta</span>
-            </Link>
+            {user ? (
+              <div className="relative group">
+                <button className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                  <User size={20} />
+                  <span className="hidden md:inline">Hola, {user.nombre}</span>
+                </button>
+                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <Link href="/perfil" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    Mi Perfil
+                  </Link>
+                  <Link href="/pedidos" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    Mis Pedidos
+                  </Link>
+                  {user.rol === 'admin' && (
+                    <Link href="/admin" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                      Administración
+                    </Link>
+                  )}
+                  <hr className="my-2" />
+                  <button 
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 flex items-center"
+                  >
+                    <LogOut size={16} className="mr-2" />
+                    Cerrar Sesión
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <Link href="/auth/login" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                <User size={20} />
+                <span className="hidden md:inline">Mi Cuenta</span>
+              </Link>
+            )}
             
             {/* Cart */}
             <Link href="/cart" className="relative flex items-center space-x-1 text-gray-600 hover:text-blue-600">
               <ShoppingCart size={20} />
               <span className="hidden md:inline">Carrito</span>
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                0
-              </span>
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  {totalItems}
+                </span>
+              )}
             </Link>
             
             {/* Mobile menu */}

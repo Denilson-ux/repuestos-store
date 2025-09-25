@@ -1,0 +1,28 @@
+-- Actualizar las URLs de imágenes con placeholders que funcionan mejor
+UPDATE productos SET imagen_url = CASE 
+    WHEN id = 1 THEN 'https://picsum.photos/300/300?random=1'
+    WHEN id = 2 THEN 'https://picsum.photos/300/300?random=2'
+    WHEN id = 3 THEN 'https://picsum.photos/300/300?random=3'
+    WHEN id = 4 THEN 'https://picsum.photos/300/300?random=4'
+    WHEN id = 5 THEN 'https://picsum.photos/300/300?random=5'
+    WHEN id = 6 THEN 'https://picsum.photos/300/300?random=6'
+    WHEN id = 7 THEN 'https://picsum.photos/300/300?random=7'
+    WHEN id = 8 THEN 'https://picsum.photos/300/300?random=8'
+    WHEN id = 9 THEN 'https://picsum.photos/300/300?random=9'
+    WHEN id = 10 THEN 'https://picsum.photos/300/300?random=10'
+    WHEN id = 11 THEN 'https://picsum.photos/300/300?random=11'
+    WHEN id = 12 THEN 'https://picsum.photos/300/300?random=12'
+    WHEN id = 13 THEN 'https://picsum.photos/300/300?random=13'
+    WHEN id = 14 THEN 'https://picsum.photos/300/300?random=14'
+    WHEN id = 15 THEN 'https://picsum.photos/300/300?random=15'
+    WHEN id = 16 THEN 'https://picsum.photos/300/300?random=16'
+    WHEN id = 17 THEN 'https://picsum.photos/300/300?random=17'
+    WHEN id = 18 THEN 'https://picsum.photos/300/300?random=18'
+    WHEN id = 19 THEN 'https://picsum.photos/300/300?random=19'
+    WHEN id = 20 THEN 'https://picsum.photos/300/300?random=20'
+    WHEN id = 21 THEN 'https://picsum.photos/300/300?random=21'
+    WHEN id = 22 THEN 'https://picsum.photos/300/300?random=22'
+    WHEN id = 23 THEN 'https://picsum.photos/300/300?random=23'
+    WHEN id = 24 THEN 'https://picsum.photos/300/300?random=24'
+    ELSE imagen_url
+END;
