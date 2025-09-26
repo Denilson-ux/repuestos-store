@@ -58,35 +58,35 @@ export default function PagoPage() {
 
   const datosPago = {
     qr: {
-      nombre: 'QR Bolivia',
+      nombre: 'Pago por QR',
       instrucciones: [
-        'Abre tu app bancaria favorita',
-        'Selecciona "Pagar con QR"',
-        'Escanea el código QR que aparece abajo',
-        'Confirma el pago por Bs ' + (pedido?.total?.toFixed(2) || '0.00'),
-        'Envíanos captura del comprobante por WhatsApp'
+        'Abre tu app bancaria o billetera móvil',
+        'Selecciona la opción para pagar con QR',
+        'Escanea el siguiente código QR',
+  'Confirma el pago por Bs ' + ((Number(pedido?.total) || 0).toFixed(2)),
+        'Envía la captura del comprobante por WhatsApp al número 67751732'
       ],
-      qrCode: `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=boliviaqr://pay?amount=${pedido?.total || 0}&merchant=repuestos_bolivia&order=${pedidoId}`,
-      whatsapp: '59170123456'
+  qrImage: '/images/productos/Qr-Denil.jpg',
+      whatsapp: '59167751732'
     },
     tigo_money: {
       nombre: 'Tigo Money',
-      numero: '70123456',
+      numero: '67751732',   //numero de pago
       titular: 'Repuestos Bolivia',
       instrucciones: [
         'Abre tu app Tigo Money',
         'Selecciona "Enviar Dinero"',
-        'Ingresa el número: 70123456',
-        'Monto: Bs ' + (pedido?.total?.toFixed(2) || '0.00'),
+        'Ingresa el número: 67751732',
+  'Monto: Bs ' + ((Number(pedido?.total) || 0).toFixed(2)),
         'Concepto: Pedido #' + pedidoId,
         'Envía captura del comprobante por WhatsApp'
       ],
-      whatsapp: '59170123456'
+      whatsapp: '59167751732'
     },
     transferencia: {
       nombre: 'Transferencia Bancaria',
       banco: 'Banco Nacional de Bolivia',
-      cuenta: '1234567890',
+      cuenta: '1234567890', //numero de cuenta
       titular: 'Repuestos Bolivia SRL',
       ci: '12345678 LP',
       instrucciones: [
@@ -94,11 +94,11 @@ export default function PagoPage() {
         'Banco: Banco Nacional de Bolivia',
         'Cuenta: 1234567890',
         'Titular: Repuestos Bolivia SRL',
-        'Monto: Bs ' + (pedido?.total?.toFixed(2) || '0.00'),
+  'Monto: Bs ' + ((Number(pedido?.total) || 0).toFixed(2)),
         'Concepto: Pedido #' + pedidoId,
         'Envía foto del comprobante por WhatsApp'
       ],
-      whatsapp: '59170123456'
+      whatsapp: '59167751732'
     }
   }
 
@@ -153,16 +153,21 @@ export default function PagoPage() {
               Realizar Pago - {datosMetodo?.nombre}
             </h2>
 
-            {/* QR Bolivia */}
-            {metodoPago === 'qr' && 'qrCode' in datosMetodo && (
+            {/* QR personalizado */}
+            {metodoPago === 'qr' && 'qrImage' in datosMetodo && (
               <div className="text-center mb-6">
                 <img 
-                  src={datosMetodo.qrCode} 
-                  alt="Código QR para pago" 
+                  src={datosMetodo.qrImage}
+                  alt="Código QR para pago"
                   className="mx-auto border rounded-lg mb-4"
+                  width={300}
+                  height={300}
                 />
                 <p className="text-lg font-semibold">
-                  Monto a pagar: <span className="text-blue-600">Bs {pedido.total.toFixed(2)}</span>
+                  Monto a pagar: <span className="text-blue-600">Bs {(Number(pedido.total) || 0).toFixed(2)}</span>
+                </p>
+                <p className="text-gray-600 mt-2">
+                  Envía la captura del comprobante por WhatsApp al <b>67751732</b> para validar tu pago.
                 </p>
               </div>
             )}
@@ -185,7 +190,7 @@ export default function PagoPage() {
                   </button>
                 </div>
                 <p className="text-lg font-semibold text-center">
-                  Monto: <span className="text-purple-600">Bs {pedido.total.toFixed(2)}</span>
+                  Monto: <span className="text-purple-600">Bs {(Number(pedido.total) || 0).toFixed(2)}</span>
                 </p>
               </div>
             )}
@@ -222,7 +227,7 @@ export default function PagoPage() {
                   </div>
                 </div>
                 <p className="text-lg font-semibold text-center">
-                  Monto: <span className="text-green-600">Bs {pedido.total.toFixed(2)}</span>
+                  Monto: <span className="text-green-600">Bs {(Number(pedido.total) || 0).toFixed(2)}</span>
                 </p>
               </div>
             )}
@@ -283,7 +288,7 @@ export default function PagoPage() {
               <hr />
               <div className="flex justify-between text-xl font-bold">
                 <span>Total a Pagar:</span>
-                <span className="text-blue-600">Bs {pedido.total.toFixed(2)}</span>
+                <span className="text-blue-600">Bs {(Number(pedido.total) || 0).toFixed(2)}</span>
               </div>
             </div>
             {/* Información de envío */}

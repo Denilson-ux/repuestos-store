@@ -30,8 +30,8 @@ export async function POST(request: NextRequest) {
     const connection = await getConnection()
 
     try {
-      // Iniciar transacción
-      await connection.execute('START TRANSACTION')
+  // Iniciar transacción
+  await connection.query('START TRANSACTION')
 
       // Verificar stock de todos los productos
       for (const item of items) {
@@ -80,8 +80,8 @@ export async function POST(request: NextRequest) {
         [payload.userId]
       )
 
-      // Confirmar transacción
-      await connection.execute('COMMIT')
+  // Confirmar transacción
+  await connection.query('COMMIT')
 
       return NextResponse.json({
         message: 'Pedido creado exitosamente',
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
 
     } catch (error) {
       // Revertir transacción en caso de error
-      await connection.execute('ROLLBACK')
+      await connection.query('ROLLBACK')
       throw error
     } finally {
       await connection.end()
