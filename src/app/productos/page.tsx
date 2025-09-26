@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useCart } from '../../../contexts/CartContext'
 import { Search, Filter, Grid, List, ShoppingCart, Star } from 'lucide-react'
+import ProductImage from '../../../components/ProductImage'
+import { useCart } from '../../../contexts/CartContext'
+import { useNotification } from '../../../contexts/NotificationContext'
 
 interface Producto {
   id: number
@@ -30,7 +32,8 @@ export default function ProductosPage() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('todos')
   const [vistaGrid, setVistaGrid] = useState(true)
   const [mostrarFiltros, setMostrarFiltros] = useState(false)
-  const { addToCart } = useCart();
+  const { addToCart } = useCart()
+  const { showNotification } = useNotification()
 
   useEffect(() => {
     cargarCategorias()
@@ -74,6 +77,11 @@ export default function ProductosPage() {
 
   const calcularDescuento = (precio: number, precioOferta: number) => {
     return Math.round(((precio - precioOferta) / precio) * 100)
+  }
+
+  const handleAddToCart = async (producto: Producto) => {
+    await addToCart(producto)
+    // Las notificaciones ya se manejan en CartContext
   }
 
   return (
@@ -184,14 +192,11 @@ export default function ProductosPage() {
                   <div key={producto.id} className={`bg-white rounded-lg shadow hover:shadow-lg transition-shadow ${vistaGrid ? '' : 'flex'}`}>
                     {/* Imagen */}
                     <div className={vistaGrid ? 'aspect-square' : 'w-48 flex-shrink-0'}>
-                      <img
+                      <ProductImage
                         src={producto.imagen_url}
                         alt={producto.nombre}
-                        className="w-full h-full object-cover rounded-t-lg lg:rounded-l-lg lg:rounded-t-none"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = `https://via.placeholder.com/300x300/3b82f6/ffffff?text=${encodeURIComponent(producto.nombre.substring(0, 15))}`;
-                        }}
+                        className="w-full h-full rounded-t-lg lg:rounded-l-lg lg:rounded-t-none"
+                        productName={producto.nombre}
                       />
                     </div>
 
@@ -231,22 +236,15 @@ export default function ProductosPage() {
                           </div>
                         </div>
                         
-                        <button
-                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-1"
-                          onClick={() => addToCart({
-                            id: producto.id,
-                            producto_id: producto.id,
-                            nombre: producto.nombre,
-                            precio: producto.precio,
-                            precio_oferta: producto.precio_oferta,
-                            cantidad: 1,
-                            imagen_url: producto.imagen_url,
-                            marca: producto.marca,
-                            stock: producto.stock
-                          })}
+                        <button 
+                          onClick={() => handleAddToCart(producto)}
+                          disabled={producto.stock === 0}
+                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-1 disabled:bg-gray-400 disabled:cursor-not-allowed"
                         >
                           <ShoppingCart size={16} />
-                          <span className="hidden sm:inline">Agregar</span>
+                          <span className="hidden sm:inline">
+                            {producto.stock === 0 ? 'Sin Stock' : 'Agregar'}
+                          </span>
                         </button>
                       </div>
                     </div>

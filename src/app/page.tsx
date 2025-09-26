@@ -81,7 +81,7 @@ export default function HomePage() {
                 <Clock className="text-purple-600" size={32} />
               </div>
               <h3 className="text-xl font-semibold mb-2">Entrega Rápida</h3>
-              <p className="text-gray-600">24-48 horas en La Paz, 3-5 días resto del país</p>
+              <p className="text-gray-600">24-48 horas en Santa Cruz-San julian, 3-5 días resto del país</p>
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@ export default function HomePage() {
             ].map((category, index) => (
               <Link 
                 key={index}
-                href={`/categoria/${category.name.toLowerCase()}`}
+                href={`/#/${category.name.toLowerCase()}`}
                 className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-6 text-center group"
               >
                 <div className="text-4xl mb-3">{category.icon}</div>

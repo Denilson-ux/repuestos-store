@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useAuth } from './AuthContext'
+import { useNotification } from './NotificationContext'
 
 interface CartItem {
   id: number
@@ -37,6 +38,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [loading, setLoading] = useState(false)
   const { user } = useAuth()
+  const { showNotification } = useNotification()
 
   // Cargar carrito cuando el usuario cambia
   useEffect(() => {
@@ -71,7 +73,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addToCart = async (producto: any) => {
     if (!user) {
-      alert('Debes iniciar sesión para agregar productos al carrito')
+      showNotification('warning', 'Debes iniciar sesión para agregar productos al carrito')
       return
     }
 
@@ -91,15 +93,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       if (response.ok) {
         await loadCart() // Recargar carrito
-        // Mostrar notificación de éxito
-        showNotification(`${producto.nombre} agregado al carrito`)
+        showNotification('success', `${producto.nombre} agregado al carrito`)
       } else {
         const error = await response.json()
-        alert(error.error || 'Error agregando producto al carrito')
+        showNotification('error', error.error || 'Error agregando producto al carrito')
       }
     } catch (error) {
       console.error('Error agregando al carrito:', error)
-      alert('Error agregando producto al carrito')
+      showNotification('error', 'Error agregando producto al carrito')
     }
   }
 
@@ -117,9 +118,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       if (response.ok) {
         setItems(items.filter(item => item.producto_id !== productId))
+        showNotification('success', 'Producto eliminado del carrito')
+      } else {
+        showNotification('error', 'Error eliminando producto del carrito')
       }
     } catch (error) {
       console.error('Error eliminando del carrito:', error)
+      showNotification('error', 'Error eliminando producto del carrito')
     }
   }
 
@@ -143,9 +148,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             ? { ...item, cantidad: quantity }
             : item
         ))
+        showNotification('success', 'Cantidad actualizada')
+      } else {
+        showNotification('error', 'Error actualizando cantidad')
       }
     } catch (error) {
       console.error('Error actualizando cantidad:', error)
+      showNotification('error', 'Error actualizando cantidad')
     }
   }
 
@@ -163,24 +172,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       if (response.ok) {
         setItems([])
+        showNotification('success', 'Carrito vaciado')
+      } else {
+        showNotification('error', 'Error vaciando carrito')
       }
     } catch (error) {
       console.error('Error vaciando carrito:', error)
+      showNotification('error', 'Error vaciando carrito')
     }
   }
 
-  // Función para mostrar notificaciones (simple)
-  const showNotification = (message: string) => {
-    // Por ahora solo alert, después podemos mejorar con toast
-    const notification = document.createElement('div')
-    notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all'
-    notification.textContent = message
-    document.body.appendChild(notification)
-    
-    setTimeout(() => {
-      notification.remove()
-    }, 3000)
-  }
+  // ...eliminada función showNotification DOM...
 
   // Calcular totales
   const totalItems = items.reduce((sum, item) => sum + item.cantidad, 0)

@@ -1,28 +1,30 @@
--- Actualizar las URLs de imágenes con placeholders que funcionan mejor
-UPDATE productos SET imagen_url = CASE 
-    WHEN id = 1 THEN 'https://picsum.photos/300/300?random=1'
-    WHEN id = 2 THEN 'https://picsum.photos/300/300?random=2'
-    WHEN id = 3 THEN 'https://picsum.photos/300/300?random=3'
-    WHEN id = 4 THEN 'https://picsum.photos/300/300?random=4'
-    WHEN id = 5 THEN 'https://picsum.photos/300/300?random=5'
-    WHEN id = 6 THEN 'https://picsum.photos/300/300?random=6'
-    WHEN id = 7 THEN 'https://picsum.photos/300/300?random=7'
-    WHEN id = 8 THEN 'https://picsum.photos/300/300?random=8'
-    WHEN id = 9 THEN 'https://picsum.photos/300/300?random=9'
-    WHEN id = 10 THEN 'https://picsum.photos/300/300?random=10'
-    WHEN id = 11 THEN 'https://picsum.photos/300/300?random=11'
-    WHEN id = 12 THEN 'https://picsum.photos/300/300?random=12'
-    WHEN id = 13 THEN 'https://picsum.photos/300/300?random=13'
-    WHEN id = 14 THEN 'https://picsum.photos/300/300?random=14'
-    WHEN id = 15 THEN 'https://picsum.photos/300/300?random=15'
-    WHEN id = 16 THEN 'https://picsum.photos/300/300?random=16'
-    WHEN id = 17 THEN 'https://picsum.photos/300/300?random=17'
-    WHEN id = 18 THEN 'https://picsum.photos/300/300?random=18'
-    WHEN id = 19 THEN 'https://picsum.photos/300/300?random=19'
-    WHEN id = 20 THEN 'https://picsum.photos/300/300?random=20'
-    WHEN id = 21 THEN 'https://picsum.photos/300/300?random=21'
-    WHEN id = 22 THEN 'https://picsum.photos/300/300?random=22'
-    WHEN id = 23 THEN 'https://picsum.photos/300/300?random=23'
-    WHEN id = 24 THEN 'https://picsum.photos/300/300?random=24'
-    ELSE imagen_url
-END;
+-- Actualizar rutas de imágenes a locales para productos de ejemplo
+
+UPDATE productos SET imagen_url = '/images/productos/filtro-aire.png' WHERE nombre = 'Filtro de Aire';
+UPDATE productos SET imagen_url = '/images/productos/bujias-ngk.png' WHERE nombre = 'Bujías NGK';
+UPDATE productos SET imagen_url = '/images/productos/filtro-combustible.png' WHERE nombre = 'Filtro de Combustible';
+UPDATE productos SET imagen_url = '/images/productos/pastillas-freno-traseras.png' WHERE nombre = 'Pastillas de Freno Traseras';
+UPDATE productos SET imagen_url = '/images/productos/disco-freno-delantero.png' WHERE nombre = 'Disco de Freno Delantero';
+UPDATE productos SET imagen_url = '/images/productos/liquido-frenos-dot4.png' WHERE nombre = 'Líquido de Frenos DOT 4';
+UPDATE productos SET imagen_url = '/images/productos/amortiguador-delantero.png' WHERE nombre = 'Amortiguador Delantero';
+UPDATE productos SET imagen_url = '/images/productos/resortes-traseros.png' WHERE nombre = 'Resortes Traseros';
+UPDATE productos SET imagen_url = '/images/productos/bujes-suspension.png' WHERE nombre = 'Bujes de Suspensión';
+UPDATE productos SET imagen_url = '/images/productos/alternador.png' WHERE nombre = 'Alternador';
+UPDATE productos SET imagen_url = '/images/productos/motor-arranque.png' WHERE nombre = 'Motor de Arranque';
+UPDATE productos SET imagen_url = '/images/productos/fusibles-set.png' WHERE nombre = 'Fusibles Set';
+UPDATE productos SET imagen_url = '/images/productos/espejo-lateral-derecho.png' WHERE nombre = 'Espejo Lateral Derecho';
+UPDATE productos SET imagen_url = '/images/productos/faro-delantero.png' WHERE nombre = 'Faro Delantero';
+UPDATE productos SET imagen_url = '/images/productos/parachoques-trasero.png' WHERE nombre = 'Parachoques Trasero';
+UPDATE productos SET imagen_url = '/images/productos/filtro-habitaculo.png' WHERE nombre = 'Filtro de Habitáculo';
+UPDATE productos SET imagen_url = '/images/productos/filtro-hidraulico.png' WHERE nombre = 'Filtro Hidráulico';
+UPDATE productos SET imagen_url = '/images/productos/aceite-transmision.png' WHERE nombre = 'Aceite Transmisión';
+UPDATE productos SET imagen_url = '/images/productos/grasa-multiuso.png' WHERE nombre = 'Grasa Multiuso';
+UPDATE productos SET imagen_url = '/images/productos/neumatico-185-65-r14.png' WHERE nombre = 'Neumático 185/65 R14';
+UPDATE productos SET imagen_url = '/images/productos/neumatico-205-55-r16.png' WHERE nombre = 'Neumático 205/55 R16';
+UPDATE productos SET imagen_url = '/images/productos/tapetes-goma.png' WHERE nombre = 'Tapetes de Goma';
+UPDATE productos SET imagen_url = '/images/productos/fundas-asientos.png' WHERE nombre = 'Fundas de Asientos';
+UPDATE productos SET imagen_url = '/images/productos/amortiguador-trasero.png' WHERE nombre = 'Amortiguador Trasero';
+UPDATE productos SET imagen_url = '/images/productos/aceite-motor-5w30.png' WHERE nombre = 'Aceite Motor 5W30';
+UPDATE productos SET imagen_url = '/images/productos/pastillas-freno-delanteras.png' WHERE nombre = 'Pastillas de Freno Delanteras';
+UPDATE productos SET imagen_url = '/images/productos/bateria-12v.png' WHERE nombre = 'Batería 12V';
+UPDATE productos SET imagen_url = '/images/productos/filtro-aceite.png' WHERE nombre = 'Filtro de Aceite';
