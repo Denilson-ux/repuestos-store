@@ -16,11 +16,20 @@ export async function GET(request: NextRequest) {
     try {
       let query = `
         SELECT 
-          p.*,
+          p.id,
+          p.nombre,
+          p.descripcion,
+          p.precio,
+          p.precio_oferta as precio_original,
+          p.stock,
+          p.marca,
+          p.imagen_url as imagen,
+          p.activo,
+          p.created_at,
           c.nombre as categoria,
           CASE 
-            WHEN p.precio_original IS NOT NULL AND p.precio_original > p.precio 
-            THEN ROUND(((p.precio_original - p.precio) / p.precio_original) * 100)
+            WHEN p.precio_oferta IS NOT NULL AND p.precio_oferta > p.precio 
+            THEN ROUND(((p.precio_oferta - p.precio) / p.precio_oferta) * 100)
             ELSE 0
           END as descuento
         FROM productos p
@@ -29,9 +38,9 @@ export async function GET(request: NextRequest) {
       `
       const params: any[] = []
 
-      // Filtrar por ofertas
+      // Filtrar por ofertas (productos con precio_oferta)
       if (ofertas) {
-        query += ` AND (p.precio_original IS NOT NULL AND p.precio_original > p.precio)`
+        query += ` AND p.precio_oferta IS NOT NULL AND p.precio_oferta > p.precio`
       }
 
       // Filtrar por categoría
@@ -70,7 +79,7 @@ export async function GET(request: NextRequest) {
       const countParams: any[] = []
 
       if (ofertas) {
-        countQuery += ` AND (p.precio_original IS NOT NULL AND p.precio_original > p.precio)`
+        countQuery += ` AND p.precio_oferta IS NOT NULL AND p.precio_oferta > p.precio`
       }
 
       if (categoria && categoria !== 'todos') {
