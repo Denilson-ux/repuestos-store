@@ -6,6 +6,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const categoria = searchParams.get('categoria')
     const busqueda = searchParams.get('busqueda')
+    const ofertas = searchParams.get('ofertas') === 'true'
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '12')
     const offset = (page - 1) * limit
@@ -16,12 +17,22 @@ export async function GET(request: NextRequest) {
       let query = `
         SELECT 
           p.*,
-          c.nombre as categoria_nombre
+          c.nombre as categoria,
+          CASE 
+            WHEN p.precio_original IS NOT NULL AND p.precio_original > p.precio 
+            THEN ROUND(((p.precio_original - p.precio) / p.precio_original) * 100)
+            ELSE 0
+          END as descuento
         FROM productos p
         LEFT JOIN categorias c ON p.categoria_id = c.id
         WHERE p.activo = true
       `
       const params: any[] = []
+
+      // Filtrar por ofertas
+      if (ofertas) {
+        query += ` AND (p.precio_original IS NOT NULL AND p.precio_original > p.precio)`
+      }
 
       // Filtrar por categoría
       if (categoria && categoria !== 'todos') {
@@ -36,8 +47,14 @@ export async function GET(request: NextRequest) {
         params.push(searchTerm, searchTerm, searchTerm)
       }
 
-      // Ordenar y paginar
-      query += ` ORDER BY p.created_at DESC LIMIT ? OFFSET ?`
+      // Ordenar - si es ofertas, ordenar por descuento descendente
+      if (ofertas) {
+        query += ` ORDER BY descuento DESC, p.created_at DESC`
+      } else {
+        query += ` ORDER BY p.created_at DESC`
+      }
+      
+      query += ` LIMIT ? OFFSET ?`
       params.push(limit, offset)
 
       const [rows] = await connection.execute(query, params)
@@ -51,6 +68,10 @@ export async function GET(request: NextRequest) {
         WHERE p.activo = true
       `
       const countParams: any[] = []
+
+      if (ofertas) {
+        countQuery += ` AND (p.precio_original IS NOT NULL AND p.precio_original > p.precio)`
+      }
 
       if (categoria && categoria !== 'todos') {
         countQuery += ` AND c.nombre = ?`
@@ -67,6 +88,7 @@ export async function GET(request: NextRequest) {
       const total = (countRows as any[])[0].total
 
       return NextResponse.json({
+        success: true,
         productos,
         pagination: {
           page,
@@ -83,7 +105,10 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error obteniendo productos:', error)
     return NextResponse.json(
-      { error: 'Error interno del servidor' },
+      { 
+        success: false,
+        error: 'Error interno del servidor' 
+      },
       { status: 500 }
     )
   }
