@@ -49,7 +49,6 @@ export default function Footer() {
               <li><Link href="#" className="text-gray-300 hover:text-white">Frenos</Link></li>
               <li><Link href="#" className="text-gray-300 hover:text-white">Suspensión</Link></li>
               <li><Link href="#" className="text-gray-300 hover:text-white">Sistema Eléctrico</Link></li>
-              <li><Link href="#" className="text-gray-300 hover:text-white">Carrocería</Link></li>
             </ul>
           </div>
           
@@ -79,7 +78,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-300 text-sm">
-            © 2024 Repuestos Bolivia. Todos los derechos reservados.
+            © 2025 Repuestos Bolivia. Todos los derechos reservados.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link href="/terminos" className="text-gray-300 hover:text-white text-sm">

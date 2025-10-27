@@ -23,12 +23,6 @@ export default function HomePage() {
                 >
                   Ver Productos <ArrowRight className="ml-2" size={20} />
                 </Link>
-                <Link 
-                  href="/contacto" 
-                  className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-800 transition-colors inline-flex items-center justify-center"
-                >
-                  Contactanos
-                </Link>
               </div>
             </div>
             <div className="hidden lg:block">
@@ -121,7 +115,7 @@ export default function HomePage() {
             Contáctanos y te ayudamos a encontrar el repuesto exacto que necesitas
           </p>
           <Link 
-            href="/contacto" 
+            href="#" 
             className="bg-yellow-400 text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors inline-flex items-center"
           >
             Contactar Ahora <ArrowRight className="ml-2" size={20} />

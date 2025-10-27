@@ -100,16 +100,11 @@ export default function Header() {
           <Link href="/productos" className="text-gray-700 hover:text-blue-600 font-medium">
             Productos
           </Link>
-          <div className="relative group">
-            <button className="text-gray-700 hover:text-blue-600 font-medium">
-              Categorías
-            </button>
-            {/* Dropdown menu - lo implementaremos después */}
-          </div>
-          <Link href="/ofertas" className="text-gray-700 hover:text-blue-600 font-medium">
+
+          <Link href="#" className="text-gray-700 hover:text-blue-600 font-medium">
             Ofertas
           </Link>
-          <Link href="/contacto" className="text-gray-700 hover:text-blue-600 font-medium">
+          <Link href="#" className="text-gray-700 hover:text-blue-600 font-medium">
             Contacto
           </Link>
         </nav>
